@@ -72,7 +72,7 @@ const client = new Client({
     })
   );
 
-  client.login(process.env.BOT_TOKEN);
+  client.login('MTA2OTUyNjAwMjI0MzQ3MzQzOQ.Gzt_8y.AvPzErjgcEuGihk7tZbBCiGy2W2WZA_Uy04g2I');
 })();
 
 process.on('SIGTERM', async () => {
