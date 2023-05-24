@@ -31,8 +31,6 @@ const client = new Client({
   await import('models');
   await Database.sync();
   Logger.info('Database connected successfully');
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.BOT_TOKEN);
 
   const extenFile = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
 
@@ -72,7 +70,7 @@ const client = new Client({
     })
   );
 
-  client.login('MTA2OTUyNjAwMjI0MzQ3MzQzOQ.Gzt_8y.AvPzErjgcEuGihk7tZbBCiGy2W2WZA_Uy04g2I');
+  client.login(process.env.BOT_TOKEN);
 })();
 
 process.on('SIGTERM', async () => {
