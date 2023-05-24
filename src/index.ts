@@ -31,6 +31,8 @@ const client = new Client({
   await import('models');
   await Database.sync();
   Logger.info('Database connected successfully');
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.BOT_TOKEN);
 
   const extenFile = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
 
