@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 
 /*
   A simple way to grab a single reply, from the user that initiated
@@ -9,9 +9,9 @@ import { Message } from 'discord.js';
 */
 export const awaitReply = async (msg: Message, question: string, limit = 60000) => {
   const filter = (m: Message) => m.author.id === msg.author.id;
-  await msg.channel.send(question);
+  await (msg.channel as TextChannel).send(question);
   try {
-    const collected = await msg.channel.awaitMessages({
+    const collected = await (msg.channel as TextChannel).awaitMessages({
       filter,
       max: 1,
       time: limit,
