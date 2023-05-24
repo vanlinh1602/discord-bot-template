@@ -1,4 +1,4 @@
-## RnR
+## Discord-Bot
 
 ### Setup
 

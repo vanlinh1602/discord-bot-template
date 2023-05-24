@@ -1,27 +1,27 @@
 {
-  "name": "rnr",
+  "name": "discord-bot",
   "version": "0.0.1",
   "description": "",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy:assets": "cpx 'src/**/*.{html,png,jpg,css,pug,svg,xlsx,gif,json}' 'dist/'",
     "start": "npm run build && node ./dist/index.js",
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "dev": ".nodemon",
     "prebuild": "npm run clean",
     "build": "npx tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "postbuild": "npm run copy:assets"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/xbotvn/bots/discord/rnr.git"
+    "url": "git@github.com:vanlinh1602/discord-bot-template.git"
   },
   "keywords": [],
   "author": "xbot",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/xbotvn/bots/discord/rnr/issues"
+    "url": "https://github.com/vanlinh1602/discord-bot-template.git/issues"
   },
-  "homepage": "https://gitlab.com/xbotvn/bots/discord/rnr#readme",
+  "homepage": "https://github.com/vanlinh1602/discord-bot-template.git#readme",
   "dependencies": {
     "async": "^3.2.4",
     "discord.js": "^14.7.1",
