@@ -1,6 +1,7 @@
 import { INTENTS, PARTIALS } from 'configs';
 import { Client, Collection } from 'discord.js';
 import { glob } from 'glob';
+import _ from 'lodash';
 import path from 'path';
 import setupDatabase from 'services/database';
 import setupLogger from 'services/logger';
@@ -31,10 +32,16 @@ const client = new Client({
   await Database.sync();
   Logger.info('Database connected successfully');
 
+  const smoothPath = (full: string, dirName: string) => {
+    const dirs = full.replace('.ts', '').split('/');
+    const smooth = _.dropWhile(dirs, (e) => e !== dirName);
+    return path.join(...smooth);
+  };
+
   // Here we load **commands** into memory, as a collection, so they're accessible here and everywhere else.
   await Promise.all(
-    glob.sync(`${__dirname}/commands/**/*.ts`).map(async (file: string) => {
-      const command: Command = await import(file.replace(__dirname, '.'));
+    glob.sync(`**/commands/*.ts`).map(async (file: string) => {
+      const command: Command = await import(`./${smoothPath(file, 'commands')}`);
       Logger.info(`Loading Command: ${command.help.name}`);
       Container.commands.set(command.help.name, command);
     })
@@ -42,8 +49,8 @@ const client = new Client({
 
   // Now we load any **slash** commands you may have in the ./slashCmds directory.
   await Promise.all(
-    glob.sync(`${__dirname}/slashCmds/**/*.ts`).map(async (file: string) => {
-      const command: SlashCmd = await import(file.replace(__dirname, '.'));
+    glob.sync(`**/slashCmds/*.ts`).map(async (file: string) => {
+      const command: SlashCmd = await import(`./${smoothPath(file, 'slashCmds')}`);
       Logger.info(`Loading Slash Command: ${command.data.name}`);
       Container.slashcmds.set(command.data.name, command);
     })
@@ -51,11 +58,11 @@ const client = new Client({
 
   // Then we load events, which will include our message and ready event.
   await Promise.all(
-    glob.sync(`${__dirname}/events/**/*.ts`).map(async (file: string) => {
+    glob.sync(`**/events/*.ts`).map(async (file: string) => {
       const eventName = path.basename(file, '.ts');
       Logger.info(`Loading Event: ${eventName}`);
 
-      const { handler } = await import(file.replace(__dirname, '.'));
+      const { handler } = await import(`./${smoothPath(file, 'events')}`);
       // Bind the client to any event, before the existing arguments provided by the discord.js event.
       client.on(eventName, handler.bind(null, client));
     })
