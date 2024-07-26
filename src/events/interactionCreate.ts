@@ -37,7 +37,7 @@ export const handler = async (client: Client, interaction: BaseInteraction) => {
         interaction.user.id
       } ran slash command ${interaction.commandName}`
     );
-  } catch ({ message }) {
+  } catch ({ message }: any) {
     Logger.error(message);
     if (interaction.replied) {
       interaction
