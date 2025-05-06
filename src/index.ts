@@ -35,14 +35,14 @@ const client = new Client({
   const extenFile = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
 
   const smoothPath = (full: string, dirName: string) => {
-    const dirs = full.replace(`.${extenFile}`, '').split('\\');
+    const dirs = full.replace(`.${extenFile}`, '').split(path.sep);
     const smooth = _.dropWhile(dirs, (e) => e !== dirName);
     return path.join(...smooth);
   };
 
   // Here we load **commands** into memory, as a collection, so they're accessible here and everywhere else.
   await Promise.all(
-    glob.sync(`**/commands/*.${extenFile}`).map(async (file: string) => {
+    glob.sync(`*/commands/*.${extenFile}`).map(async (file: string) => {
       const command: Command = await import(`./${smoothPath(file, 'commands')}`);
       Logger.info(`Loading Command: ${command.help.name}`);
       Container.commands.set(command.help.name, command);
@@ -51,7 +51,7 @@ const client = new Client({
 
   // Now we load any **slash** commands you may have in the ./slashCmds directory.
   await Promise.all(
-    glob.sync(`**/slashCmds/*.${extenFile}`).map(async (file: string) => {
+    glob.sync(`*/slashCmds/*.${extenFile}`).map(async (file: string) => {
       const command: SlashCmd = await import(`./${smoothPath(file, 'slashCmds')}`);
       Logger.info(`Loading Slash Command: ${command.data.name}`);
       Container.slashcmds.set(command.data.name, command);
@@ -60,7 +60,7 @@ const client = new Client({
 
   // Then we load events, which will include our message and ready event.
   await Promise.all(
-    glob.sync(`**/events/*.${extenFile}`).map(async (file: string) => {
+    glob.sync(`*/events/*.${extenFile}`).map(async (file: string) => {
       const eventName = path.basename(file, `.${extenFile}`);
       Logger.info(`Loading Event: ${eventName}`);
 
