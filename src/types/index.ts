@@ -1,15 +1,21 @@
-import type { ApplicationCommandData, Client, CommandInteraction, Message } from 'discord.js';
+import { PERMISSION_LEVELS } from 'configs';
+import type {
+  ApplicationCommandData,
+  ChatInputCommandInteraction,
+  Client,
+  Message,
+} from 'discord.js';
 import type { Settings } from 'models';
 
 export type SlashCmd = {
   conf: {
-    permLevel: string;
+    permLevel: PERMISSION_LEVELS;
     guildOnly: boolean;
   };
-  data: ApplicationCommandData & { defaultPermission: boolean };
+  data: ApplicationCommandData;
   run: (
     client: Client,
-    interaction: CommandInteraction,
+    interaction: ChatInputCommandInteraction,
     options: { settings?: Settings | null }
   ) => Promise<void>;
 };
