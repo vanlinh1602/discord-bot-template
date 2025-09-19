@@ -1,4 +1,5 @@
 import async from 'async';
+import { PERMISSION_LEVELS } from 'configs';
 import { BaseInteraction, GuildMemberRoleManager, Message } from 'discord.js';
 import { Settings } from 'models';
 
@@ -14,13 +15,13 @@ export const PERM_LEVELS: {
   // Lowest permission level, for users without a role.
   {
     level: 0,
-    name: 'User',
+    name: PERMISSION_LEVELS.User,
     check: async () => true,
   },
 
   {
     level: 3,
-    name: 'Administrator',
+    name: PERMISSION_LEVELS.Administrator,
     check: async (message) => {
       try {
         if (message.guild) {
@@ -42,16 +43,15 @@ export const PERM_LEVELS: {
   },
 
   {
-    level: 4,
-    name: 'Server Owner',
-    check: async (message) => message.guild?.ownerId === message.client.user.id,
+    level: 8,
+    name: PERMISSION_LEVELS.ServerOwner,
+    check: async (message) => message.guild?.ownerId === getUser(message).id,
   },
-
   // Has some limited access like rebooting the bot or reloading commands.
   {
     level: 9,
-    name: 'Bot Admin',
-    check: async () => false,
+    name: PERMISSION_LEVELS.BotAdmin,
+    check: async (message) => getUser(message).id === process.env.BOT_ADMIN,
   },
 
   /*
@@ -60,7 +60,7 @@ export const PERM_LEVELS: {
    */
   {
     level: 10,
-    name: 'Bot Owner',
+    name: PERMISSION_LEVELS.BotOwner,
     check: async (message) => getUser(message).id === process.env.BOT_OWNER,
   },
 ];

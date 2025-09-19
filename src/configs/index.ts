@@ -35,3 +35,12 @@ export const DEFAULT_SETTINGS = {
   systemNotice: true, // This gives a notice when a user tries to run a command that they do not have permission to use.
   commandReply: true, // Toggle this if you want the bot to ping the command executor or not.
 };
+
+// eslint-disable-next-line no-shadow
+export enum PERMISSION_LEVELS {
+  User = 'User',
+  Administrator = 'Administrator',
+  ServerOwner = 'Server Owner',
+  BotAdmin = 'Bot Admin',
+  BotOwner = 'Bot Owner',
+}
