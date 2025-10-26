@@ -1,10 +1,18 @@
 import { DEFAULT_SETTINGS } from 'configs';
 import { PERM_LEVELS, permLevel } from 'configs/permissions';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, Events, Message, TextChannel } from 'discord.js';
 import { Settings } from 'models';
+import { EventConfig } from 'types';
+
+type Event = EventConfig<Events.MessageCreate>;
+
+export const conf: Event['conf'] = {
+  key: Events.MessageCreate,
+  enabled: true,
+};
 
 // Emitted whenever a message is created.
-export const handler = async (client: Client, message: Message) => {
+export const handler: Event['handler'] = async (client: Client, message: Message) => {
   // It's good practice to ignore other bots.
   // This also makes your bot ignore itself and not get into a spam loop (we call that "botception").
   if (!client.user || message.author.bot) return;

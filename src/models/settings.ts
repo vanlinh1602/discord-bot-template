@@ -1,8 +1,6 @@
 import { DEFAULT_SETTINGS } from 'configs';
 import { DataTypes, Model } from 'sequelize';
 
-import { Channel } from './channel';
-
 export class Settings extends Model {
   declare guildId: string;
 
@@ -42,9 +40,3 @@ Settings.init(
     sequelize: Database,
   }
 );
-
-Settings.hasMany(Channel, {
-  foreignKey: 'guildId',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});

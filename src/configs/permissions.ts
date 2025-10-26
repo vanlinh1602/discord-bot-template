@@ -26,13 +26,9 @@ export const PERM_LEVELS: {
       try {
         if (message.guild) {
           const settings = await Settings.findOne({ where: { guildId: message.guild.id } });
-          if (settings && message.member) {
-            const adminRole = message.guild.roles.cache.find(
-              (r) => r.name.toLowerCase() === settings.adminRole.toLowerCase()
-            );
-            if (adminRole) {
-              return (message.member.roles as GuildMemberRoleManager).cache.has(adminRole.id);
-            }
+          if (settings?.adminRole && message.member) {
+            const userRoles = message.member.roles as GuildMemberRoleManager;
+            return userRoles.cache.has(settings.adminRole);
           }
         }
         return false;

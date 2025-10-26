@@ -4,8 +4,6 @@ import type { SlashCmd } from 'types';
 
 export const run: SlashCmd['run'] = async (client, interaction: ChatInputCommandInteraction) => {
   if (!interaction.isChatInputCommand()) return;
-  console.log('interaction', interaction);
-
   await interaction.deferReply();
   const reply = await interaction.editReply('Ping?');
   await interaction.editReply(

@@ -1,3 +1,4 @@
+import { PERMISSION_LEVELS } from 'configs';
 import { codeBlock, TextChannel } from 'discord.js';
 import _ from 'lodash';
 import type { Command } from 'types';
@@ -64,7 +65,7 @@ export const conf: Command['conf'] = {
   enabled: true,
   guildOnly: false,
   aliases: ['h', 'help'],
-  permLevel: 'User',
+  permLevel: PERMISSION_LEVELS.User,
 };
 
 export const help: Command['help'] = {

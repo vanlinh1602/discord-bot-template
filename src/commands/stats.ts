@@ -1,3 +1,4 @@
+import { PERMISSION_LEVELS } from 'configs';
 import { codeBlock, TextChannel, version } from 'discord.js';
 import moment from 'moment';
 import type { Command } from 'types';
@@ -25,7 +26,7 @@ export const conf: Command['conf'] = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 'Bot Admin',
+  permLevel: PERMISSION_LEVELS.BotAdmin,
 };
 
 export const help: Command['help'] = {

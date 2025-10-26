@@ -1,10 +1,17 @@
 import { DEFAULT_SETTINGS } from 'configs';
 import { PERM_LEVELS, permLevel } from 'configs/permissions';
-import { BaseInteraction, Client } from 'discord.js';
+import { BaseInteraction, Client, Events } from 'discord.js';
 import { Settings } from 'models';
+import { EventConfig } from 'types';
 
+type Event = EventConfig<Events.InteractionCreate>;
+
+export const conf: Event['conf'] = {
+  key: Events.InteractionCreate,
+  enabled: true,
+};
 // Emitted when an interaction is created.
-export const handler = async (client: Client, interaction: BaseInteraction) => {
+export const handler: Event['handler'] = async (client: Client, interaction: BaseInteraction) => {
   // If it's not a command, stop.
   if (!interaction.isCommand()) return;
 

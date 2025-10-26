@@ -1,3 +1,4 @@
+import { PERMISSION_LEVELS } from 'configs';
 import { TextChannel } from 'discord.js';
 import type { Command } from 'types';
 
@@ -110,7 +111,7 @@ export const conf: Command['conf'] = {
   enabled: true,
   guildOnly: true,
   aliases: ['setting', 'settings', 'conf'],
-  permLevel: 'Administrator',
+  permLevel: PERMISSION_LEVELS.Administrator,
 };
 
 export const help: Command['help'] = {

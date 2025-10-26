@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { GatewayIntentBits, Partials } from 'discord.js';
 
 /*
@@ -36,7 +37,6 @@ export const DEFAULT_SETTINGS = {
   commandReply: true, // Toggle this if you want the bot to ping the command executor or not.
 };
 
-// eslint-disable-next-line no-shadow
 export enum PERMISSION_LEVELS {
   User = 'User',
   Administrator = 'Administrator',

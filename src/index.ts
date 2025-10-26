@@ -1,11 +1,11 @@
 import { INTENTS, PARTIALS } from 'configs';
-import { Client, Collection } from 'discord.js';
+import { Client, ClientEvents, Collection } from 'discord.js';
 import { glob } from 'glob';
 import _ from 'lodash';
 import path from 'path';
 import setupDatabase from 'services/database';
 import setupLogger from 'services/logger';
-import type { Command, SlashCmd } from 'types';
+import type { Command, EventConfig, SlashCmd } from 'types';
 
 require('dotenv-flow').config();
 
@@ -29,7 +29,8 @@ const client = new Client({
 (async () => {
   await Database.authenticate();
   await import('models');
-  await Database.sync();
+  await import('models/foreign_key');
+  await Database.sync({ alter: true });
   Logger.info('Database connected successfully');
 
   const extenFile = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
@@ -64,9 +65,12 @@ const client = new Client({
       const eventName = path.basename(file, `.${extenFile}`);
       Logger.info(`Loading Event: ${eventName}`);
 
-      const { handler } = await import(`./${smoothPath(file, 'events')}`);
-      // Bind the client to any event, before the existing arguments provided by the discord.js event.
-      client.on(eventName, handler.bind(null, client));
+      const { handler, conf }: EventConfig<keyof ClientEvents> = await import(
+        `./${smoothPath(file, 'events')}`
+      );
+      if (conf.enabled) {
+        client.on(conf.key, handler.bind(null, client));
+      }
     })
   );
 

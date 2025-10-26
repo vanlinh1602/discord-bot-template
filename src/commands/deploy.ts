@@ -1,3 +1,4 @@
+import { PERMISSION_LEVELS } from 'configs';
 import { TextChannel } from 'discord.js';
 import type { Command } from 'types';
 
@@ -15,7 +16,11 @@ export const run: Command['run'] = async (client, message) => {
 
   // We'll use set but please keep in mind that `set` is overkill for a singular command.
   // Set the guild commands like
-  await client.guilds.cache.get(message.guild.id)?.commands.set(guildCmds.map((c) => c.data));
+  // await client.guilds.cache.get(message.guild.id)?.commands.set(guildCmds.map((c) => c.data));
+
+  await client.guilds.cache.forEach(async (guild) => {
+    await guild.commands.set(guildCmds.map((c) => c.data));
+  });
 
   // Then set the global commands like
   await client.application?.commands
@@ -29,7 +34,7 @@ export const conf: Command['conf'] = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 'Bot Owner',
+  permLevel: PERMISSION_LEVELS.BotOwner,
 };
 
 export const help: Command['help'] = {

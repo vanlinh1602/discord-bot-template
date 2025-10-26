@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS } from 'configs';
+import { DEFAULT_SETTINGS, PERMISSION_LEVELS } from 'configs';
 import { readPermLevel } from 'configs/permissions';
 import type { Command } from 'types';
 
@@ -18,7 +18,7 @@ export const conf: Command['conf'] = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 'User',
+  permLevel: PERMISSION_LEVELS.User,
 };
 
 export const help: Command['help'] = {
